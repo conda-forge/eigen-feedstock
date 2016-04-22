@@ -10,7 +10,7 @@ source:
   sha1: 574b0732f7e04ecfa91597afb2f69bc44f3387e6
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
