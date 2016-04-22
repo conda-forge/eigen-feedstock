@@ -5,7 +5,7 @@ Home: http://eigen.tuxfamily.org/
 
 Package license: MPL2
 
-Feedstock license: BSD
+Feedstock license: BSD 3-Clause
 
 Summary: C++ template library for linear algebra
 
