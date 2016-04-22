@@ -15,6 +15,7 @@ build:
 requirements:
   build:
     - cmake
+    - python  # [win]
 
 test:
   files:
