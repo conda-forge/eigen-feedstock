@@ -1,4 +1,4 @@
-{% set version = "3.2.8" %}
+{% set version = "3.3.1" %}
 
 package:
   name: eigen
@@ -7,10 +7,10 @@ package:
 source:
   fn: eigen-{{ version }}.tar.gz
   url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
-  sha1: 574b0732f7e04ecfa91597afb2f69bc44f3387e6
+  sha256: 3c9d2c1f86eee404de99f4238b24c3a737e6ec963a325d443878fa59f6eb2a90
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
@@ -22,8 +22,8 @@ test:
     - test.cc
 
   commands:
-    - test -d $PREFIX/include/eigen3  # [unix]
-    - if not exist %PREFIX%\\Library\\include\\Eigen exit 1  # [win]
+    - test -d ${PREFIX}/include/eigen3  # [unix]
+    - if not exist %PREFIX%\\Library\\include\\eigen3 exit 1  # [win]
 
 about:
   home: http://eigen.tuxfamily.org/
@@ -34,3 +34,4 @@ extra:
   recipe-maintainers:
     - jakirkham
     - patricksnape
+    - jschueller
