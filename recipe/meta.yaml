@@ -8,6 +8,9 @@ source:
   fn: eigen-{{ version }}.tar.gz
   url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
   sha256: 3c9d2c1f86eee404de99f4238b24c3a737e6ec963a325d443878fa59f6eb2a90
+  patches:
+    # fix testing: https://bitbucket.org/eigen/eigen/commits/8dc0c20fada6/
+    - int-real-conversion.patch
 
 build:
   number: 0
