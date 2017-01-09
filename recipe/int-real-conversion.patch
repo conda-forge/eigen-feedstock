@@ -1,0 +1,35 @@
+# HG changeset patch
+# User Gael Guennebaud <g.gael@free.fr>
+# Date 1483619768 -3600
+# Node ID 8dc0c20fada6963cdc42e97d4468b067b24b1be2
+# Parent  7fd1ddec0ba00ca64e1eacbdc04bb187d34683c6
+Convert integers to real numbers when computing relative L2 error
+
+diff --git a/test/main.h b/test/main.h
+--- test/main.h
++++ test/main.h
+@@ -372,10 +372,10 @@
+ 
+ // test_relative_error returns the relative difference between a and b as a real scalar as used in isApprox.
+ template<typename T1,typename T2>
+-typename T1::RealScalar test_relative_error(const EigenBase<T1> &a, const EigenBase<T2> &b)
++typename NumTraits<typename T1::RealScalar>::NonInteger test_relative_error(const EigenBase<T1> &a, const EigenBase<T2> &b)
+ {
+   using std::sqrt;
+-  typedef typename T1::RealScalar RealScalar;
++  typedef typename NumTraits<typename T1::RealScalar>::NonInteger RealScalar;
+   typename internal::nested_eval<T1,2>::type ea(a.derived());
+   typename internal::nested_eval<T2,2>::type eb(b.derived());
+   return sqrt(RealScalar((ea-eb).cwiseAbs2().sum()) / RealScalar((std::min)(eb.cwiseAbs2().sum(),ea.cwiseAbs2().sum())));
+@@ -433,9 +433,9 @@
+ }
+ 
+ template<typename T1,typename T2>
+-typename NumTraits<T1>::Real test_relative_error(const T1 &a, const T2 &b, typename internal::enable_if<internal::is_arithmetic<typename NumTraits<T1>::Real>::value, T1>::type* = 0)
++typename NumTraits<typename NumTraits<T1>::Real>::NonInteger test_relative_error(const T1 &a, const T2 &b, typename internal::enable_if<internal::is_arithmetic<typename NumTraits<T1>::Real>::value, T1>::type* = 0)
+ {
+-  typedef typename NumTraits<T1>::Real RealScalar; 
++  typedef typename NumTraits<typename NumTraits<T1>::Real>::NonInteger RealScalar;
+   return numext::sqrt(RealScalar(numext::abs2(a-b))/RealScalar((numext::mini)(numext::abs2(a),numext::abs2(b))));
+ }
+ 
