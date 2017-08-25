@@ -11,6 +11,18 @@ Summary: C++ template library for linear algebra
 
 
 
+Current build status
+====================
+
+Linux: [![Circle CI](https://circleci.com/gh/conda-forge/eigen-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/eigen-feedstock)
+OSX: [![TravisCI](https://travis-ci.org/conda-forge/eigen-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/eigen-feedstock)
+Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/eigen-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/eigen-feedstock/branch/master)
+
+Current release info
+====================
+Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/eigen/badges/version.svg)](https://anaconda.org/conda-forge/eigen)
+Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/eigen/badges/downloads.svg)](https://anaconda.org/conda-forge/eigen)
+
 Installing eigen
 ================
 
@@ -31,7 +43,6 @@ It is possible to list all of the versions of `eigen` available on your platform
 ```
 conda search eigen --channel conda-forge
 ```
-
 
 
 About conda-forge
@@ -67,18 +78,6 @@ Terminology
 
 **conda-forge** - the place where the feedstock and smithy live and work to
                   produce the finished article (built conda distributions)
-
-Current build status
-====================
-
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/eigen-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/eigen-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/eigen-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/eigen-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/eigen-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/eigen-feedstock/branch/master)
-
-Current release info
-====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/eigen/badges/version.svg)](https://anaconda.org/conda-forge/eigen)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/eigen/badges/downloads.svg)](https://anaconda.org/conda-forge/eigen)
 
 
 Updating eigen-feedstock
