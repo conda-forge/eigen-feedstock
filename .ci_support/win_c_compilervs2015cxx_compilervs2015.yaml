@@ -2,8 +2,6 @@ c_compiler:
 - vs2015
 cxx_compiler:
 - vs2015
-fortran_compiler:
-- flang
 zip_keys:
 - - c_compiler
   - cxx_compiler
