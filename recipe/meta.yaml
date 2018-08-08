@@ -10,12 +10,14 @@ source:
   sha256: 0454b6bacafd2bf641e0fb0f59572b9995728b77e41d1b8517f807334d07e68e
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - cmake
-    - python  # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
 
 test:
   files:
