@@ -15,11 +15,12 @@ build:
 requirements:
   build:
     - cmake
-    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
 
 test:
+  requires:
+    - {{ compiler('cxx') }}
   files:
     - test.cc
 
