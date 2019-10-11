@@ -180,4 +180,5 @@ Feedstock Maintainers
 * [@jakirkham](https://github.com/jakirkham/)
 * [@jschueller](https://github.com/jschueller/)
 * [@patricksnape](https://github.com/patricksnape/)
+* [@seanyen](https://github.com/seanyen/)
 
