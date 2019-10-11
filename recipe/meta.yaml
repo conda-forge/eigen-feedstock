@@ -9,6 +9,7 @@ source:
   url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
   sha256: 7e84ef87a07702b54ab3306e77cea474f56a40afa1c0ab245bb11725d006d0da
   patches:
+    - CMakeLists.txt.patch # [win]
     - eigen3.pc.in.patch  # [win]
 
 build:
