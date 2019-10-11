@@ -1,6 +1,10 @@
 mkdir build
 cd build
 
+:: Workaround to make unwanted tools invisible for CMake
+:: (E.g., GNU Fortron Compiler)
+set PATH=%PATH:C:\ProgramData\chocolatey\bin;=%
+
 set CMAKE_CONFIG="Release"
 
 cmake -LAH -G"NMake Makefiles"              ^
