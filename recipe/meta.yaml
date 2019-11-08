@@ -10,14 +10,13 @@ source:
   sha256: 7e84ef87a07702b54ab3306e77cea474f56a40afa1c0ab245bb11725d006d0da
 
 build:
-  number: 1000
+  number: 1001
 
 requirements:
   build:
     - cmake
     - {{ compiler('cxx') }}
     - make
-  host:
 
 test:
   requires:
@@ -28,6 +27,7 @@ test:
   commands:
     - test -d ${PREFIX}/include/eigen3  # [unix]
     - if not exist %PREFIX%\\Library\\include\\eigen3 exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\share\\pkgconfig\\eigen3.pc exit 1  # [win]
 
 about:
   home: http://eigen.tuxfamily.org/
@@ -39,3 +39,4 @@ extra:
     - jakirkham
     - patricksnape
     - jschueller
+    - seanyen
