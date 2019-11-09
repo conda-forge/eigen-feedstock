@@ -12,7 +12,7 @@ source:
     - 0001-cholmod_support.patch    
 
 build:
-  number: 1001
+  number: 1002
 
 requirements:
   build:
