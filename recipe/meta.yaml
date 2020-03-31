@@ -8,8 +8,10 @@ source:
   fn: eigen-{{ version }}.tar.gz
   url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
   sha256: 7e84ef87a07702b54ab3306e77cea474f56a40afa1c0ab245bb11725d006d0da
+  {% if version == "3.3.7" %}
   patches:
-    - 0001-cholmod_support.patch    
+    - 0001-cholmod_support.patch
+  {% endif %}
 
 build:
   number: 1002
