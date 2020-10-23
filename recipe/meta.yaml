@@ -1,4 +1,4 @@
-{% set version = "3.3.7" %}
+{% set version = "3.3.8" %}
 
 package:
   name: eigen
@@ -6,11 +6,14 @@ package:
 
 source:
   fn: eigen-{{ version }}.tar.gz
-  url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
-  sha256: 7e84ef87a07702b54ab3306e77cea474f56a40afa1c0ab245bb11725d006d0da
+  url: https://gitlab.com/libeigen/eigen/-/archive/{{ version }}/eigen-{{ version }}.tar.gz
+  sha256: 146a480b8ed1fb6ac7cd33fec9eb5e8f8f62c3683b3f850094d9d5c35a92419a
+  patches:
+    - bug2011.patch
+    - paradiso.patch
 
 build:
-  number: 1001
+  number: 0
 
 requirements:
   build:
@@ -31,7 +34,7 @@ test:
 
 about:
   home: http://eigen.tuxfamily.org/
-  license: MPL2
+  license: MPL-2.0
   summary: C++ template library for linear algebra
 
 extra:
