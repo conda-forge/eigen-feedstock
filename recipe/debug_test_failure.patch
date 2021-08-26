@@ -20,7 +20,7 @@ index 01667388b..6d2120f1e 100644
    bool ret = test_isApprox(a,b);
    if(!ret)
    {
-+    std::cerr << "Type1: " << typeid(Type1).name() << " Type2: " << typeid(Type2).name() << std::endl;
++    std::cerr << "Type1: " << type_name<Type1>() << " Type2: " << type_name<Type2>() << std::endl;
 +    std::cerr << "verifyIsApprox: a: " << a << " b: " << b << std::endl;
      std::cerr << "Difference too large wrt tolerance " << get_test_precision(a)  << ", relative error is: " << test_relative_error(a,b) << std::endl;
    }
