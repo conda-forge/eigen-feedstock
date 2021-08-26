@@ -2,10 +2,11 @@ diff --git a/test/basicstuff.cpp b/test/basicstuff.cpp
 index 4ca607c82..46171fd0b 100644
 --- a/test/basicstuff.cpp
 +++ b/test/basicstuff.cpp
-@@ -207,6 +207,9 @@ struct casting_test {
+@@ -207,6 +207,10 @@ struct casting_test {
      Matrix<TgtScalar,4,4> n = m.template cast<TgtScalar>();
      for (int i=0; i<m.rows(); ++i) {
        for (int j=0; j<m.cols(); ++j) {
++        std::cerr << "SrcScalar: " << type_name<SrcScalar>() << " TgtScalar: " << type_name<TgtScalar>() << std::endl;
 +        std::cerr << "m(i,j)" << m(i, j) << std::endl;
 +        std::cerr << "internal::cast<SrcScalar,TgtScalar>(m(i, j)" << internal::cast<SrcScalar,TgtScalar>(m(i, j) << std::endl;
 +        std::cerr << "n(i,j)" << n(i, j) << std::endl;
@@ -16,11 +17,10 @@ diff --git a/test/main.h b/test/main.h
 index 01667388b..6d2120f1e 100644
 --- a/test/main.h
 +++ b/test/main.h
-@@ -617,6 +617,8 @@ inline bool verifyIsApprox(const Type1& a, const Type2& b)
+@@ -617,6 +617,7 @@ inline bool verifyIsApprox(const Type1& a, const Type2& b)
    bool ret = test_isApprox(a,b);
    if(!ret)
    {
-+    std::cerr << "Type1: " << type_name<Type1>() << " Type2: " << type_name<Type2>() << std::endl;
 +    std::cerr << "verifyIsApprox: a: " << a << " b: " << b << std::endl;
      std::cerr << "Difference too large wrt tolerance " << get_test_precision(a)  << ", relative error is: " << test_relative_error(a,b) << std::endl;
    }
