@@ -1,0 +1,13 @@
+diff --git a/test/main.h b/test/main.h
+index 01667388b..6d2120f1e 100644
+--- a/test/main.h
++++ b/test/main.h
+@@ -617,6 +617,8 @@ inline bool verifyIsApprox(const Type1& a, const Type2& b)
+   bool ret = test_isApprox(a,b);
+   if(!ret)
+   {
++    std::cerr << "Type1: " << typeid(Type1).name() << " Type2: " << typeid(Type2).name() << std::endl;
++    std::cerr << "verifyIsApprox: a: " << a << " b: " << b << std::endl;
+     std::cerr << "Difference too large wrt tolerance " << get_test_precision(a)  << ", relative error is: " << test_relative_error(a,b) << std::endl;
+   }
+   return ret;
