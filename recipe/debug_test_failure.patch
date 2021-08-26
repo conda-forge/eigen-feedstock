@@ -8,7 +8,7 @@ index 4ca607c82..46171fd0b 100644
        for (int j=0; j<m.cols(); ++j) {
 +        std::cerr << "SrcScalar: " << type_name<SrcScalar>() << " TgtScalar: " << type_name<TgtScalar>() << std::endl;
 +        std::cerr << "m(i,j)" << m(i, j) << std::endl;
-+        std::cerr << "internal::cast<SrcScalar,TgtScalar>(m(i, j)" << internal::cast<SrcScalar,TgtScalar>(m(i, j) << std::endl;
++        std::cerr << "internal::cast<SrcScalar,TgtScalar>(m(i, j)" << internal::cast<SrcScalar,TgtScalar>(m(i, j)) << std::endl;
 +        std::cerr << "n(i,j)" << n(i, j) << std::endl;
          VERIFY_IS_APPROX(n(i, j), (internal::cast<SrcScalar,TgtScalar>(m(i, j))));
        }
