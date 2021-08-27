@@ -8,8 +8,8 @@ source:
   fn: eigen-{{ version }}.tar.gz
   url: https://gitlab.com/libeigen/eigen/-/archive/{{ version }}/eigen-{{ version }}.tar.gz
   sha256: 8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
-  patches:
-    - debug_test_failure.patch
+  #patches:
+  #  - debug_test_failure.patch
 
 build:
   number: 0
