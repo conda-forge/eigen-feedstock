@@ -19,7 +19,7 @@ cmake --build . --config %CMAKE_CONFIG% --target install
 if errorlevel 1 exit 1
 
 rem Just make the basic tests as all the tests take too long to run.
-FOR /L %%A IN (1,1,7) DO (
+FOR /L %%A IN (1,1,8) DO (
   cmake --build . --config %CMAKE_CONFIG% --target basicstuff_%%A
 )
 ctest -R basicstuff*
