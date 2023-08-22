@@ -1,5 +1,5 @@
-About eigen-feedstock
-=====================
+About eigen-split-feedstock
+===========================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/eigen-feedstock/blob/main/LICENSE.txt)
 
@@ -8,6 +8,11 @@ Home: http://eigen.tuxfamily.org/
 Package license: MPL-2.0
 
 Summary: C++ template library for linear algebra
+
+This feedstock builds two different conda packages:
+* `eigen`: the eigen header only library ifself.
+* `eigen-abi`: this a meta-package should be added as a dependency for packages that use contain C++ compiled libraries that use eigen in their public headers.
+
 
 Current build status
 ====================
@@ -89,27 +94,28 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-eigen-green.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-eigen--abi-green.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) |
 
-Installing eigen
-================
+Installing eigen-split
+======================
 
-Installing `eigen` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `eigen-split` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `eigen` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `eigen, eigen-abi` can be installed with `conda`:
 
 ```
-conda install eigen
+conda install eigen eigen-abi
 ```
 
 or with `mamba`:
 
 ```
-mamba install eigen
+mamba install eigen eigen-abi
 ```
 
 It is possible to list all of the versions of `eigen` available on your platform with `conda`:
@@ -179,17 +185,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating eigen-feedstock
-========================
+Updating eigen-split-feedstock
+==============================
 
-If you would like to improve the eigen recipe or build a new
+If you would like to improve the eigen-split recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/eigen-feedstock are
+Note that all branches in the conda-forge/eigen-split-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
