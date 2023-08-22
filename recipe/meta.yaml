@@ -1,7 +1,7 @@
 {% set version = "3.4.0" %}
 
 package:
-  name: eigen
+  name: eigen-split
   version: {{ version }}
 
 source:
@@ -12,27 +12,43 @@ source:
 build:
   number: 1
 
-requirements:
-  build:
-    - cmake
-    - {{ compiler('cxx') }}
-    - make
+outputs:
+  - name: eigen
+    requirements:
+      build:
+        - cmake
+        - {{ compiler('cxx') }}
+        - make
+    test:
+      requires:
+        - {{ compiler('cxx') }}
+      files:
+        - test.cc
+      commands:
+        - test -d ${PREFIX}/include/eigen3  # [unix]
+        - if not exist %PREFIX%\\Library\\include\\eigen3 exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\share\\pkgconfig\\eigen3.pc exit 1  # [win]
 
-test:
-  requires:
-    - {{ compiler('cxx') }}
-  files:
-    - test.cc
-
-  commands:
-    - test -d ${PREFIX}/include/eigen3  # [unix]
-    - if not exist %PREFIX%\\Library\\include\\eigen3 exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\share\\pkgconfig\\eigen3.pc exit 1  # [win]
+  - name: eigen-abi
+    build:
+      noarch: generic
+      run_exports:
+        - {{ pin_subpackage('eigen-abi', max_pin='x.x.x') }}
+      run_constrained:
+        - eigen =={{ version }}
+    test:
+      commands:
+        - echo "This is a metapackage, no test is necessary."
 
 about:
   home: http://eigen.tuxfamily.org/
   license: MPL-2.0
   summary: C++ template library for linear algebra
+  description: |
+      This feedstock builds two different conda packages:
+      * `eigen`: the eigen header only library ifself.
+      * `eigen-abi`: this a meta-package should be added as a dependency for packages that use contain C++ compiled libraries that use eigen in their public headers.
+
 
 extra:
   recipe-maintainers:
