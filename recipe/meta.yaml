@@ -15,7 +15,7 @@ build:
 outputs:
   - name: eigen
     script: build-eigen.sh  # [unix]
-    script: build-eigen.bat  # [win]
+    script: bld-eigen.bat  # [win]
     requirements:
       build:
         - cmake
