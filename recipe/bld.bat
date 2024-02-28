@@ -4,6 +4,7 @@ cd build
 :: Workaround to make unwanted tools invisible for CMake
 :: (E.g., GNU Fortron Compiler)
 set PATH=%PATH:C:\ProgramData\chocolatey\bin;=%
+set PATH=%PATH:C:\mingw64\bin;=%
 
 set CMAKE_CONFIG="Release"
 
