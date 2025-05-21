@@ -4,5 +4,9 @@ channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2019
+eigen_max_align_bytes:
+- '16'
+- '32'
+- '64'
 target_platform:
 - win-64
