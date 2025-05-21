@@ -1,0 +1,4 @@
+eigen_max_align_bytes:
+  - 16
+  - 32
+  - 64
