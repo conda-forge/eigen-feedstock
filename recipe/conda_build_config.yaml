@@ -1,4 +1,6 @@
 eigen_max_align_bytes:
   - 16
-  - 32
-  - 64
+  # As of eigen 3.4.0 only on x86_64 it happens that the default value of
+  # EIGEN_MAX_ALIGN_BYTES is set to 32 (x86-64-v3/AVX) or 64 (x86-64-v4/AVX)
+  - 32  # [x86_64]
+  - 64  # [x86_64]
