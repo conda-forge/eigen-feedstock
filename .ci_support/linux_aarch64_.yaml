@@ -12,7 +12,5 @@ docker_image:
 - quay.io/condaforge/linux-anvil-aarch64:alma9
 eigen_max_align_bytes:
 - '16'
-- '32'
-- '64'
 target_platform:
 - linux-aarch64

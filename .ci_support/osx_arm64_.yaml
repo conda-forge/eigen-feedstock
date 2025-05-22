@@ -12,8 +12,6 @@ cxx_compiler_version:
 - '18'
 eigen_max_align_bytes:
 - '16'
-- '32'
-- '64'
 macos_machine:
 - arm64-apple-darwin20.0.0
 target_platform:
