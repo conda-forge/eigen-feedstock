@@ -1,4 +1,4 @@
-{% set version = "3.4.0" %}
+{% set version = "5.0.0" %}
 
 package:
   name: eigen
@@ -7,15 +7,16 @@ package:
 source:
   fn: eigen-{{ version }}.tar.gz
   url: https://gitlab.com/libeigen/eigen/-/archive/{{ version }}/eigen-{{ version }}.tar.gz
-  sha256: 8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
+  sha256: 315c881e19e17542a7d428c5aa37d113c89b9500d350c433797b730cd449c056
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
     - cmake
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - make
 
 test:
