@@ -11,5 +11,5 @@ cmake ${CMAKE_ARGS} \
 make install
 make basicstuff -j${CPU_COUNT}
 if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
-ctest -R basicstuff*
+ctest -VV -R basicstuff*
 fi
