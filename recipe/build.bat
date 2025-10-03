@@ -8,7 +8,7 @@ set PATH=%PATH:C:\mingw64\bin;=%
 
 set CMAKE_CONFIG="Release"
 
-cmake -LAH -G"NMake Makefiles"              ^
+cmake -LAH -G"Ninja" %CMAKE_ARGS%           ^
   -DCMAKE_BUILD_TYPE=%CMAKE_CONFIG%         ^
   -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX%      ^
   -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX%   ^
@@ -23,7 +23,7 @@ rem Just make the basic tests as all the tests take too long to run.
 FOR /L %%A IN (1,1,8) DO (
   cmake --build . --config %CMAKE_CONFIG% --target basicstuff_%%A
 )
-ctest -R basicstuff*
+ctest --output-on-failure -R basicstuff*
 if errorlevel 1 exit 1
 goto :eof
 
