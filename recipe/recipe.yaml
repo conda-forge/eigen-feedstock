@@ -1,0 +1,66 @@
+schema_version: 1
+
+context:
+  version: 3.4.0
+
+package:
+  name: eigen
+  version: ${{ version }}
+
+source:
+  - url: https://gitlab.com/libeigen/eigen/-/archive/${{ version }}/eigen-${{ version }}.tar.gz
+    sha256: 8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
+
+build:
+  number: 1
+  script:
+    - if: unix
+      then: build.sh
+    - if: win
+      then: build.bat
+
+requirements:
+  build:
+    - cmake
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib('c') }}
+    - ninja
+
+tests:
+  - files:
+      recipe:
+        - test.cc
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+    script:
+      - if: unix
+        then:
+          - ${CXX} -I${PREFIX}/include -o test test.cc
+          - ./test
+      - if: win
+        then:
+          - "%CXX% -I%PREFIX%\\Library\\include -o test.exe test.cc"
+          - test.exe
+  - script:
+      - if: unix
+        then:
+          - test -d ${PREFIX}/include/eigen3
+      - if: win
+        then:
+          - if not exist %PREFIX%\\Library\\include\\eigen3 exit 1
+          - if not exist %PREFIX%\\Library\\share\\pkgconfig\\eigen3.pc exit 1
+
+about:
+  homepage: http://eigen.tuxfamily.org/
+  license: MPL-2.0
+  license_file: COPYING.MPL2
+  summary: C++ template library for linear algebra
+
+extra:
+  recipe-maintainers:
+    - traversaro
+    - jakirkham
+    - patricksnape
+    - jschueller
+    - seanyen
