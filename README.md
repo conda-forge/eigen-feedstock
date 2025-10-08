@@ -82,6 +82,8 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-eigen-green.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/eigen.svg)](https://anaconda.org/conda-forge/eigen) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-eigen--abi-green.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/eigen-abi.svg)](https://anaconda.org/conda-forge/eigen-abi) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-eigen--abi--devel-green.svg)](https://anaconda.org/conda-forge/eigen-abi-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/eigen-abi-devel.svg)](https://anaconda.org/conda-forge/eigen-abi-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/eigen-abi-devel.svg)](https://anaconda.org/conda-forge/eigen-abi-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/eigen-abi-devel.svg)](https://anaconda.org/conda-forge/eigen-abi-devel) |
 
 Installing eigen
 ================
@@ -93,16 +95,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `eigen` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `eigen, eigen-abi, eigen-abi-devel` can be installed with `conda`:
 
 ```
-conda install eigen
+conda install eigen eigen-abi eigen-abi-devel
 ```
 
 or with `mamba`:
 
 ```
-mamba install eigen
+mamba install eigen eigen-abi eigen-abi-devel
 ```
 
 It is possible to list all of the versions of `eigen` available on your platform with `conda`:
