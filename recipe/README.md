@@ -27,9 +27,9 @@ The `eigen-abi` version encodes **two** things:
 The value of `EIGEN_MAX_ALIGN_BYTES` is always `16` on non-`x86-64` architectures, while on `x86-64` on the specific SIMD options enabled, in particular:
 
 | Condition | Tipical case in conda-forge | Default `EIGEN_MAX_ALIGN_BYTES` | 
-|---|---|---:|---:|
+|:---:|:---:|:---:|
 | Neither `__AVX__` nor `__AVX512F__` macros defined. | Non-`x86-64` architecture, `x86-64` without `x86_64-microarch-level` installed, or `x86_64-microarch-level=1` or `x86_64-microarch-level=2` installed | `16` |
-| `__AVX__` defined, while `__AVX512F__` not defined  | `x86-64` with `x86_64-microarch-level=3` installed, that adds the `-march=x86-64-v3` compilation option in `CXXFLAGS`, `CFLAGS` and `CPPFLAGS` env variables |
+| `__AVX__` defined, while `__AVX512F__` not defined  | `x86-64` with `x86_64-microarch-level=3` installed, that adds the `-march=x86-64-v3` compilation option in `CXXFLAGS`, `CFLAGS` and `CPPFLAGS` env variables |  `32` |
 | `__AVX512F__` |  `x86-64` with `x86_64-microarch-level=4` installed, that adds the `-march=x86-64-v4` compilation option in `CXXFLAGS`, `CFLAGS` and `CPPFLAGS` env variables | `64` | 
 
 See for example for https://github.com/eigen-mirror/eigen/blob/5.0.0/Eigen/src/Core/util/ConfigureVectorization.h#L54-L73 and  the details on this preprocessor logic. Note that `EIGEN_MAX_ALIGN_BYTES` can have a default value different from the one described when compiling GPU-code, but this is not tracked here as the `eigen-abi` package only tracks the ABI of code targeting CPU.
@@ -119,4 +119,5 @@ The main reason for decoupling the `eigen_abi_profile` and the `EIGEN_MAX_ALIGN_
 For more details on why different `eigen-*` packages were introduced, see the following related issues:
 * https://github.com/conda-forge/eigen-feedstock/pull/41
 * https://github.com/conda-forge/conda-forge.github.io/issues/2092
+
 
