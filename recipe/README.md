@@ -88,6 +88,19 @@ This setup compiles your library consistently for the chosen level and **pins** 
 
 Furthermore, to ensure that downstream consumers of your library install a compatible `eigen` and (on `x86-64`) `x86_64-microarch-level` you need to also ensure that they install `eigen-abi-devel`. For example, if your packages a `<pkg>-devel` output, you can add `eigen-abi-devel` as a `run` dependency to it.
 
+Furthermore, in this case if in your feedstock you are using x86-64 [microarchitecture-optimized builds](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch), you need to make sure that the `x86_64-microarch-level` package in `build` (used by the conda-forge machinery for microarchitecture-optimized builds) and the one in `host` (used by `eigen-abi-devel`) are actually compatible, this can be easily done by adding the `x86_64-microarch-level` output in both the `build` and `host`:
+
+```yaml
+# recipe.yaml (excerpt)
+requirements:
+  build:
+    - if: unix and x86_64
+      then: x86_64-microarch-level ==${{ microarch_level }}
+  host:
+    - if: unix and x86_64
+      then: x86_64-microarch-level ==${{ microarch_level }}
+    - eigen-abi-devel
+```
 
 ---
 
@@ -106,3 +119,4 @@ The main reason for decoupling the `eigen_abi_profile` and the `EIGEN_MAX_ALIGN_
 For more details on why different `eigen-*` packages were introduced, see the following related issues:
 * https://github.com/conda-forge/eigen-feedstock/pull/41
 * https://github.com/conda-forge/conda-forge.github.io/issues/2092
+
