@@ -10,12 +10,8 @@ cxx_compiler:
 - vs2022
 eigen_abi_profile:
 - '100'
-- '70'
-- '80'
 eigen_max_align_bytes:
 - '16'
-- '64'
-- '32'
 target_platform:
 - win-64
 zip_keys:
