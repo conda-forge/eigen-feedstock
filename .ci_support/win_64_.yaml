@@ -1,3 +1,5 @@
+c_compiler:
+- vs2022
 c_stdlib:
 - vs
 channel_sources:
@@ -6,5 +8,12 @@ channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2022
+eigen_abi_profile:
+- '100'
+eigen_max_align_bytes:
+- '16'
 target_platform:
 - win-64
+zip_keys:
+- - eigen_abi_profile
+  - eigen_max_align_bytes
