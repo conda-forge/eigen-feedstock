@@ -1,12 +1,12 @@
 eigen_abi_profile:
   - 100
-  - 80  # [x86_64]
-  - 70  # [x86_64]
+  - 80  # [x86_64 and not win]
+  - 70  # [x86_64 and not win]
 
 eigen_max_align_bytes:
   - 16
-  - 32  # [x86_64]
-  - 64  # [x86_64]
+  - 32  # [x86_64 and not win]
+  - 64  # [x86_64 and not win]
 
 zip_keys:
   - 
