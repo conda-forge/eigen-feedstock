@@ -42,7 +42,7 @@ requirements:
     - eigen-abi-devel
 ```
 
-### B. If the library contained in the recipe includes Eigen headers (either directly or indirectly) in public headers and it has a `*-devel` output
+### C. If the library contained in the recipe includes Eigen headers (either directly or indirectly) in public headers and it has a `*-devel` output
 
 In this case, let's imagine that the recipe contains `libfoo` and `libfoo-devel` outputs. The following dependencies are required in that case:
 
@@ -160,3 +160,4 @@ The main reason for decoupling the `eigen_abi_profile` and the `EIGEN_MAX_ALIGN_
 For more details on why different `eigen-*` packages were introduced, see the following related issues:
 * https://github.com/conda-forge/eigen-feedstock/pull/41
 * https://github.com/conda-forge/conda-forge.github.io/issues/2092
+
