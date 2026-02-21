@@ -6,18 +6,104 @@ This feedstock supplies three related packages:
 - **`eigen-abi`** – a tiny *marker* package used to pin the ABI **exposed by downstream libraries that use Eigen types in public headers**.
 - **`eigen-abi-devel`** – an helper for downstream packages. It constrains the enabled CPU micro-architecture level and **exports a runtime dependency** on the matching `eigen-abi` via `run_exports`, so consumers of the downstream library automatically receive a compatible ABI marker.
 
----
+## How recipes use these packages
 
-## Why an ABI marker is needed
+There are three distint cases of recipe that is consuming eigen packages, listed in the following as A, B or C. In the B or C case, extra care is
+required if you are using x86-64 [microarchitecture-optimized builds](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch), as described in the X section.
+
+### A. If the library contained in the recipe does not include Eigen headers (either directly or indirectly) in public headers
+
+In this case, the recipe should just have a `eigen` dependency in host:
+
+~~~yaml
+# recipe.yaml (excerpt)
+requirements:
+  host:
+    - eigen
+~~~
+
+### B. If the library contained in the recipe includes Eigen headers (either directly or indirectly) in public headers and it has not a `*-devel` output
+
+In this case, you need to add an `host` dependency on `eigen-abi-devel`: 
+
+```yaml
+# recipe.yaml (excerpt)
+requirements:
+  host:
+    - eigen-abi-devel
+```
+
+Furthermore any consumer of the affected library should **also** include `eigen-abi-devel` as `host` dependency, i.e. if the library is called `libfoo`, any downstream user of it should depend in `host` on both  `libfoo` and `eigen-abi-devel`:
+```yaml
+# recipe.yaml (excerpt)
+requirements:
+  host:
+    - libfoo
+    - eigen-abi-devel
+```
+
+### B. If the library contained in the recipe includes Eigen headers (either directly or indirectly) in public headers and it has a `*-devel` output
+
+In this case, let's imagine that the recipe contains `libfoo` and `libfoo-devel` outputs. The following dependencies are required in that case:
+
+```yaml
+# recipe.yaml (excerpt)
+outputs:
+  - package:
+      name: libfoo
+    # ...
+    requirements:
+      host:
+        - eigen-abi-devel
+  # ...
+  - package:
+      name: libfoo-devel
+    # ...
+    requirements:
+      run:
+        - eigen-abi-devel
+      run_exports:
+        - ${{ pin_compatible('eigen-abi', upper_bound='x.x.x.x') }}
+```
+
+Differently from case `B`, no modification is required in downstream recipes that depend on `libfoo-devel`, unless they also expose Eigen headers in their public headers (and in that case they fall under the `B` or `C` case). 
+
+Furthermore any consumer of the affected library should **also** include `eigen-abi-devel` as `host` dependency, i.e. if the library is called `libfoo`, any downstream user of it should depend in `host` on both  `libfoo` and `eigen-abi-devel`:
+```yaml
+# recipe.yaml (excerpt)
+requirements:
+  host:
+    - libfoo
+    - eigen-abi-devel
+```
+
+
+### X. Recipes using microarchitecture-optimized builds
+
+In case your feedstock depends on `eigen-abi-devel` (so it matches the B. or C. case) if you are also using x86-64 [microarchitecture-optimized builds](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch), you need to make sure that the `x86_64-microarch-level` package in `build` (used by the conda-forge machinery for microarchitecture-optimized builds) and the one in `host` (used by `eigen-abi-devel`) are actually compatible, this can be easily done by adding the `x86_64-microarch-level` output in both the `build` and `host`:
+
+```yaml
+# recipe.yaml (excerpt)
+requirements:
+  build:
+    - if: unix and x86_64
+      then: x86_64-microarch-level ==${{ microarch_level }}
+  host:
+    - if: unix and x86_64
+      then: x86_64-microarch-level ==${{ microarch_level }}
+    - eigen-abi-devel
+```
+
+## Further details on packaging
+
+### Why an ABI marker is needed
 
 Eigen is header-only, but downstream C/C++ libraries often **use Eigen types in public headers** (e.g., `Eigen::Matrix<…>` in function signatures).  
 Those libraries inherit ABI properties from Eigen. When Eigen changes ABI-relevant details, in particulary when the Eigen version changes, or the value of **`EIGEN_MAX_ALIGN_BYTES`** or when builds enable wider SIMD, binary compatibility of those downstream libraries changes.
 
 To make these transitions safe for downstream users and packages, `eigen-abi` acts as a marker that is versioned so that **conda’s solver** can ensure that only libraries with a compatible Eigen abi are installed in the same environment.
 
----
-
-## What `eigen-abi` encodes
+### What `eigen-abi` encodes
 
 The `eigen-abi` version encodes **two** things:
 
@@ -49,9 +135,8 @@ So for example `eigen-abi==3.4.0.100` is used to mark a compiled library that ex
 
 > Note: in theory downstream projects can override Eigen’s alignment (e.g. by directly setting `EIGEN_MAX_ALIGN_BYTES` or setting other macros like `EIGEN_DONT_VECTORIZE`), but this interferes with conda-forge packaging. When packaging libraries that use Eigen in their public headers make sure that they do not override the default value of `EIGEN_MAX_ALIGN_BYTES` or other related macros.
 
----
 
-## Role of `eigen-abi-devel`
+### Role of `eigen-abi-devel`
 
 Downstream packages that expose Eigen in public headers add `eigen-abi-devel` to **host** section, so that dependendency on the correct `eigen-abi` is achieved through `run_exports`, so any consumer of the downstream library automatically depends on the compatible ABI marker. This has two effects:
 
@@ -60,64 +145,18 @@ Downstream packages that expose Eigen in public headers add `eigen-abi-devel` to
 
 Projects that do **not** expose Eigen in installed headers (either directly or transitively) do not need to deal with `eigen-abi` or `eigen-abi-devel` at all, and can just continue to depend on `eigen`.
 
-## How downstream recipes use these packages
+### FAQs
 
-### If your library does not either **exposes** Eigen in public headers, or directly or indirectly includes headers of a library that **exposes** Eigen in public headers
-
-Depend on `eigen` only, i.e.:
-
-~~~yaml
-# recipe.yaml (excerpt)
-requirements:
-  host:
-    - eigen
-~~~
-
-### If your library either **exposes** Eigen in public headers, or directly or indirectly includes headers of a library that **exposes** Eigen in public headers
-
-In this case, you need to add an `host` dependency on `eigen-abi-devel`: 
-
-```yaml
-# recipe.yaml (excerpt)
-requirements:
-  host:
-    - eigen-abi-devel
-```
-
-This setup compiles your library consistently for the chosen level and **pins** consumers to the compatible `eigen-abi` automatically. As `eigen-abi-devel` has a run dependency on a compatible `eigen` version, the only dependency you need to have is on `eigen-abi-devel`.
-
-Furthermore, to ensure that downstream consumers of your library install a compatible `eigen` and (on `x86-64`) `x86_64-microarch-level` you need to also ensure that they install `eigen-abi-devel`. For example, if your packages a `<pkg>-devel` output, you can add `eigen-abi-devel` as a `run` dependency to it.
-
-Furthermore, in this case if in your feedstock you are using x86-64 [microarchitecture-optimized builds](https://conda-forge.org/docs/maintainer/knowledge_base/#microarch), you need to make sure that the `x86_64-microarch-level` package in `build` (used by the conda-forge machinery for microarchitecture-optimized builds) and the one in `host` (used by `eigen-abi-devel`) are actually compatible, this can be easily done by adding the `x86_64-microarch-level` output in both the `build` and `host`:
-
-```yaml
-# recipe.yaml (excerpt)
-requirements:
-  build:
-    - if: unix and x86_64
-      then: x86_64-microarch-level ==${{ microarch_level }}
-  host:
-    - if: unix and x86_64
-      then: x86_64-microarch-level ==${{ microarch_level }}
-    - eigen-abi-devel
-```
-
----
-
-## FAQs
-
-### Why two different packages `eigen-abi` and `eigen-abi-devel` are needed?
+#### Why two different packages `eigen-abi` and `eigen-abi-devel` are needed?
 
 The split between the two packages have been introduced to avoid that if a user installed a Python library that depended on a C++ library compiled with a non-standard `eigen_abi_profile`, the `x86_64-microarch-level` was silently installed, that would result in a non-intuitive behaviour.
 
-### Why the introduction of `eigen_abi_profile` instead of directly encoding the value of `EIGEN_MAX_ALIGN_BYTES` in the `eigen-abi` version?
+#### Why the introduction of `eigen_abi_profile` instead of directly encoding the value of `EIGEN_MAX_ALIGN_BYTES` in the `eigen-abi` version?
 
 The main reason for decoupling the `eigen_abi_profile` and the `EIGEN_MAX_ALIGN_BYTES` value is to explicitly control which `eigen-abi-devel` version was installed by default.
 
-## Discussion history 
+### Discussion history 
 
 For more details on why different `eigen-*` packages were introduced, see the following related issues:
 * https://github.com/conda-forge/eigen-feedstock/pull/41
 * https://github.com/conda-forge/conda-forge.github.io/issues/2092
-
-
