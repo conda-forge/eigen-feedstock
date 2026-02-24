@@ -12,7 +12,7 @@ source:
     sha256: 8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - package:
@@ -99,6 +99,9 @@ outputs:
       name: eigen-abi
       # The version of eigen-abi is composed by the eigen version, and eigen_abi_profile value
       version: ${{ version }}.${{ eigen_abi_profile }}
+    requirements:
+      run_constraints:
+        - ${{ pin_subpackage('eigen', upper_bound='x.x.x') }}
     tests:
       - script:
           - echo "This is a metapackage, no test is necessary."
