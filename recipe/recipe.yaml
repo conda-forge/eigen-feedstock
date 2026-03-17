@@ -35,6 +35,14 @@ outputs:
           then:
             - ${{ compiler('fortran') }}
         - ninja
+      ignore_run_exports:
+        from_package:
+          - ${{ compiler('cxx') }}
+          - ${{ compiler('c') }}
+          - ${{ stdlib('c') }}
+          - if: unix
+            then:
+              - ${{ compiler('fortran') }}
     tests:
       - files:
           recipe:
