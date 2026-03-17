@@ -12,7 +12,11 @@ cmake -LAH -G"Ninja" %CMAKE_ARGS%           ^
   -DCMAKE_BUILD_TYPE=%CMAKE_CONFIG%         ^
   -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX%      ^
   -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX%   ^
-  -DEIGEN_BUILD_PKGCONFIG=ON ^
+  -DEIGEN_BUILD_BLAS:BOOL=OFF               ^
+  -DEIGEN_BUILD_LAPACK:BOOL=OFF             ^
+  -DEIGEN_BUILD_DOC:BOOL=OFF                ^
+  -DEIGEN_BUILD_DEMOS:BOOL=OFF              ^
+  -DEIGEN_BUILD_PKGCONFIG=ON                ^
   ..
 if errorlevel 1 exit 1
 

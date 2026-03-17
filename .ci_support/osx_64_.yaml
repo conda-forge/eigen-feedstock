@@ -26,6 +26,10 @@ eigen_max_align_bytes:
 - '16'
 - '64'
 - '32'
+fortran_compiler:
+- gfortran
+fortran_compiler_version:
+- '14'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 target_platform:
@@ -33,5 +37,6 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+  - fortran_compiler_version
 - - eigen_abi_profile
   - eigen_max_align_bytes
