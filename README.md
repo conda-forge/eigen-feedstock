@@ -3,7 +3,7 @@ About eigen-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/eigen-feedstock/blob/main/LICENSE.txt)
 
-Home: http://eigen.tuxfamily.org/
+Home: https://libeigen.gitlab.io/
 
 Package license: MPL-2.0
 
