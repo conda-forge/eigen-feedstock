@@ -50,10 +50,21 @@ outputs:
         requirements:
           build:
             - ${{ compiler('cxx') }}
+          # The test binary links a C++ runtime even though eigen itself is
+          # header-only and ships none. On cross-compiled targets the test runs
+          # under emulation, so the runtime must be present in the test's run
+          # env -- the build env holds the wrong architecture.
+          run:
+            - if: linux
+              then: libstdcxx
+            - if: osx
+              then: libcxx
         script:
           - if: unix
             then:
-              - ${CXX} -I${PREFIX}/include -o test test.cc
+              # $LDFLAGS carries -Wl,-rpath,$PREFIX/lib; without it the binary
+              # cannot locate libstdc++.so.6 when run under emulation.
+              - ${CXX} ${CXXFLAGS} ${LDFLAGS} -I${PREFIX}/include -o test test.cc
               - ./test
           - if: win
             then:
