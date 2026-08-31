@@ -48,17 +48,12 @@ outputs:
           recipe:
             - test.cc
         requirements:
-          build:
-            - ${{ compiler('cxx') }}
-          # The test binary links a C++ runtime even though eigen itself is
-          # header-only and ships none. On cross-compiled targets the test runs
-          # under emulation, so the runtime must be present in the test's run
-          # env -- the build env holds the wrong architecture.
+          # Declared under `run` so the compiler and the C++ runtime it pulls in
+          # resolve for the target platform. On cross-compiled targets the test
+          # binary runs under emulation, and a build-env compiler would be the
+          # wrong architecture.
           run:
-            - if: linux
-              then: libstdcxx
-            - if: osx
-              then: libcxx
+            - ${{ compiler('cxx') }}
         script:
           - if: unix
             then:
