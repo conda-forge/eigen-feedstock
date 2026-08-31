@@ -12,7 +12,7 @@ source:
     sha256: e9c326dc8c05cd1e044c71f30f1b2e34a6161a3b6ecf445d56b53ff1669e3dec
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - package:
@@ -48,12 +48,18 @@ outputs:
           recipe:
             - test.cc
         requirements:
-          build:
+          # Declared under `run` so the compiler and the C++ runtime it pulls in
+          # resolve for the target platform. On cross-compiled targets the test
+          # binary runs under emulation, and a build-env compiler would be the
+          # wrong architecture.
+          run:
             - ${{ compiler('cxx') }}
         script:
           - if: unix
             then:
-              - ${CXX} -I${PREFIX}/include -o test test.cc
+              # $LDFLAGS carries -Wl,-rpath,$PREFIX/lib; without it the binary
+              # cannot locate libstdc++.so.6 when run under emulation.
+              - ${CXX} ${CXXFLAGS} ${LDFLAGS} -I${PREFIX}/include -o test test.cc
               - ./test
           - if: win
             then:
